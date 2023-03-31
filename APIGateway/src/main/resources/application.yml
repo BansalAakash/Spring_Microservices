@@ -1,0 +1,23 @@
+#Using YAML for spring cloud gateway routes as it's simpler to use for array of objects
+#Could have used application.properties too, it would have been more verbose
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hotel_service
+          uri: lb://HOTELSERVICE
+          predicates:
+            - Path=/hotels/**
+        - id: user_service
+          uri: lb://USERSERVICE
+          predicates:
+            - Path=/users/**
+        - id: rating_service
+          uri: lb://RATINGSERVICE
+          predicates:
+            - Path=/ratings/**
+
+#Basically means, ki jab /ratings/** format waala URL request hoga toh request will be redirected to
+#lb://RATINGSERVICE/ratings/**
+#Here we are able to use RATINGSERVICE name directly because of Eureka server.
